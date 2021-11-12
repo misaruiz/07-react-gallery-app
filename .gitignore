@@ -24,3 +24,4 @@ yarn-error.log*
 
 # project ref
 /private
+/src/config.js

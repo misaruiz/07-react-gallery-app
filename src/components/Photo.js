@@ -2,7 +2,7 @@ import React from 'react';
 
 const Photo = (props) => (
     <li>
-        <img src="props.image.url" alt="" />
+        <img src={props.url} alt="" />
     </li>
 );
 
