@@ -13,8 +13,11 @@ class PhotoContainer extends Component {
   render() {
     const results = this.props.data;
     let photos;
+    let headline;
+    let isLoading = this.props.state.loading;
 
-    if (results.length > 0) {
+    if (results.length > 0 || !isLoading) {
+      headline = 'Results';
       photos = results.map(photo => 
         <Photo 
             url={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_c.jpg`} 
@@ -22,17 +25,22 @@ class PhotoContainer extends Component {
             title={photo.title}
         />
       );
+    } else if (isLoading) {
+        headline = 'Loading...';
+
     } else {
       photos = <NotFound />
     }
 
-    { document.title = this.props.titleTag }
+    document.title = this.props.titleTag;
 
     return (
-      
-      <ul className="gif-list">
-        { photos }
-      </ul> 
+      <div className="photo-container">
+        <h2>{ headline }</h2>
+          <ul>
+            { photos }
+          </ul> 
+      </div>
     );
   }
     

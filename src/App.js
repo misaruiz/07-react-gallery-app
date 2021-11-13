@@ -9,18 +9,11 @@ import axios from 'axios';
 import Nav from './components/Nav';
 import PhotoContainer from './components/PhotoContainer';
 import SearchForm from './components/SearchForm';
+import PageNotFound from './components/PageNotFound';
 
 class App extends Component {
 
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     photos: [],
-  //     loading: true
-  //   };
-  // } 
   state = {
-    // photos: [],
     sunset: [],
     eclipse: [],
     shadow: [],
@@ -30,12 +23,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.performSearch();
     const navCategories = [
       "sunset", "eclipse", "shadow"
     ];
 
     navCategories.map(navCategory => this.getPhotos(navCategory, true));
+  }
+
+  isLoading = (bool) => {
+    this.setState({ loading: bool })
   }
 
     getPhotos = (query, ofCategory = false) => {
@@ -44,7 +40,7 @@ class App extends Component {
       .then(res => {
         if (ofCategory) {
           this.setState({
-            [query]: res.data.photos.photo
+            [query]: res.data.photos.photo,
           })
         } else {
           this.setState({
@@ -52,48 +48,51 @@ class App extends Component {
             query: res.data.photos.photo
           })
         }
-        this.setState({
-          // sunsets: res.data.photos.photo,
-          loading: false
-        });
+        this.setState({ loading: false });
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
       });
-    }
-  
-  // performSearch = query => {
-  //   this.setState({ loading: true});
-  // }
-  
+    };
+
 
     render() {
       return (
         <BrowserRouter>
           <div className="container">
-            <Nav />
             <SearchForm onSearch={this.getPhotos} />
-            <Switch>
-              <Route exact path="/" render={() => <Redirect to="/sunsets" /> } />
-              <Route exact path="/sunsets" render={() => 
-                <PhotoContainer data={this.state.sunset} titleTag="Sunsets" /> } 
-              />
-              <Route exact path="/eclipses" render={() => 
-                <PhotoContainer data={this.state.eclipse} titleTag="Eclipses" /> } 
-              />
-              <Route exact path="/shadows" render={() => 
-                <PhotoContainer data={this.state.shadow} titleTag="Shadows" /> } 
-              />
-              <Route exact path="/search/:query" children={({ match }) => 
-                <PhotoContainer 
-                  data={this.state.query} 
-                  query={match.params.query}
-                  getPhotos={this.getPhotos}
-                  searchText={this.state.searchText}
-                  titleTag={this.state.searchText}
-                /> } 
-              />
-            </Switch>
+            <Nav />
+            
+            {/* <h2> 
+              { (this.state.loading)
+                ? `Loading...`
+                : `Results`
+              }
+              </h2> */}
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to="/sunsets" /> } />
+                <Route exact path="/sunsets" render={() => 
+                  <PhotoContainer data={this.state.sunset} titleTag="Sunsets" state={this.state} /> } 
+                />
+                <Route exact path="/eclipses" render={() => 
+                  <PhotoContainer data={this.state.eclipse} titleTag="Eclipses" state={this.state} /> } 
+                />
+                <Route exact path="/shadows" render={() => 
+                  <PhotoContainer data={this.state.shadow} titleTag="Shadows" state={this.state} /> } 
+                />
+                <Route exact path="/search/:query" render={({ match }) => 
+                  <PhotoContainer 
+                    data={this.state.query} 
+                    query={match.params.query}
+                    getPhotos={this.getPhotos}
+                    searchText={this.state.searchText}
+                    titleTag={this.state.searchText}
+                    state={this.state}
+                  /> } 
+                />
+                <Route render={() => <PageNotFound />} />
+              </Switch>
+            
           </div>
         </BrowserRouter>
       );
