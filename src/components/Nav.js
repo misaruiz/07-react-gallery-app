@@ -3,9 +3,9 @@ import React from 'react';
 const Nav = (props) => (
     <nav class="main-nav">
         <ul>
-            <li><a href='#'>Cats</a></li>
-            <li><a href='#'>Dogs</a></li>
-            <li><a href='#'>Computers</a></li>
+            <li><a href='/sunsets'>Sunsets</a></li>
+            <li><a href='/eclipses'>Eclipses</a></li>
+            <li><a href='/shadows'>Shadows</a></li>
         </ul>
     </nav>
 );

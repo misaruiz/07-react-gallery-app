@@ -6,7 +6,7 @@ class PhotoContainer extends Component {
 
   componentDidUpdate() {
     if (this.props.searchText !== this.props.query) {
-      this.props.reload(this.props.query);
+      this.props.getPhotos(this.props.query);
     }
   }
 
@@ -18,7 +18,8 @@ class PhotoContainer extends Component {
       photos = results.map(photo => 
         <Photo 
             url={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_c.jpg`} 
-            key={photo.id} 
+            key={photo.id}
+            title={photo.title}
         />
       );
     } else {

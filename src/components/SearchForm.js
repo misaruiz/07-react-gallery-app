@@ -2,29 +2,25 @@ import React, { Component } from "react";
 
 class SearchForm extends Component {
 
-    playerInput = React.createRef();
+    state = {
+      searchQuery: ""
+    }
 
-    // handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     this.props.addPlayer(this.playerInput.current.value);
-    //     e.currentTarget.reset();
-    //   }
+    handleQueryChange = (e) => {
+      this.setState({
+        searchQuery: e.target.value
+      })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.onSearch(this.state.searchQuery, false);
+        e.currentTarget.reset();
+      }
 
     render() {
         return(
-            // <form onSubmit={this.handleSubmit}>
-            //     <input 
-            //         type="text"
-            //         ref={this.playerInput}
-            //         placeholder="Enter a player's name"
-            //     />
-
-            //     <input 
-            //         type="Submit"
-            //         value="Add Player"
-            //     />
-            // </form>
-            <form class="search-form">
+          <form class="search-form">
             <input type="search" name="search" placeholder="Search" required/>
             <button type="submit" class="search-button">
               <svg fill="#fff" height="24" viewBox="0 0 23 23" width="24" xmlns="http://www.w3.org/2000/svg">

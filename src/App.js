@@ -8,6 +8,7 @@ import axios from 'axios';
 //Components
 import Nav from './components/Nav';
 import PhotoContainer from './components/PhotoContainer';
+import SearchForm from './components/SearchForm';
 
 class App extends Component {
 
@@ -20,24 +21,45 @@ class App extends Component {
   // } 
   state = {
     // photos: [],
-    sunsets: [],
+    sunset: [],
+    eclipse: [],
+    shadow: [],
     loading: true
   }
 
   componentDidMount() {
     // this.performSearch();
-    axios
-      .get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=sunsets&per_page=24&format=json&nojsoncallback=1`)
+    const navCategories = [
+      "sunset", "eclipse", "shadow"
+    ];
+
+    navCategories.map(navCategory => this.getPhotos(navCategory, true));
+  }
+
+    getPhotos = (query, ofCategory = false) => {
+      axios
+      .get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(res => {
+        if (ofCategory) {
+          this.setState({
+            [query]: res.data.photos.photo
+          })
+        } else {
+          this.setState({
+            search: query,
+            query: res.data.photos.photo
+          })
+        }
         this.setState({
-          sunsets: res.data.photos.photo,
+          // sunsets: res.data.photos.photo,
           loading: false
         });
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
       });
-  }
+    }
+  
   // performSearch = query => {
   //   this.setState({ loading: true});
   // }
@@ -48,11 +70,18 @@ class App extends Component {
         <BrowserRouter>
           <div className="container">
             <Nav />
+            <SearchForm onSearch={this.getPhotos} />
             <Switch>
-              <Route exact path="/" render={() => <PhotoContainer data={this.state.sunsets} /> } />
-              {/* <Route exact path="/sunsets" render={() => 
-                                                  <PhotoContainer data={this.state.sunsets} alt="sunsets" /> } 
-              /> */}
+              <Route exact path="/" render={() => <Redirect to="/sunsets" /> } />
+              <Route exact path="/sunsets" render={() => 
+                <PhotoContainer data={this.state.sunset} /> } 
+              />
+              <Route exact path="/eclipses" render={() => 
+                <PhotoContainer data={this.state.eclipse} /> } 
+              />
+              <Route exact path="/shadows" render={() => 
+                <PhotoContainer data={this.state.shadow} /> } 
+              />
             </Switch>
           </div>
         </BrowserRouter>
