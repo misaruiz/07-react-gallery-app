@@ -24,6 +24,8 @@ class App extends Component {
     sunset: [],
     eclipse: [],
     shadow: [],
+    query: [],
+    searchText: [],
     loading: true
   }
 
@@ -46,7 +48,7 @@ class App extends Component {
           })
         } else {
           this.setState({
-            search: query,
+            searchText: query,
             query: res.data.photos.photo
           })
         }
@@ -74,13 +76,22 @@ class App extends Component {
             <Switch>
               <Route exact path="/" render={() => <Redirect to="/sunsets" /> } />
               <Route exact path="/sunsets" render={() => 
-                <PhotoContainer data={this.state.sunset} /> } 
+                <PhotoContainer data={this.state.sunset} titleTag="Sunsets" /> } 
               />
               <Route exact path="/eclipses" render={() => 
-                <PhotoContainer data={this.state.eclipse} /> } 
+                <PhotoContainer data={this.state.eclipse} titleTag="Eclipses" /> } 
               />
               <Route exact path="/shadows" render={() => 
-                <PhotoContainer data={this.state.shadow} /> } 
+                <PhotoContainer data={this.state.shadow} titleTag="Shadows" /> } 
+              />
+              <Route exact path="/search/:query" children={({ match }) => 
+                <PhotoContainer 
+                  data={this.state.query} 
+                  query={match.params.query}
+                  getPhotos={this.getPhotos}
+                  searchText={this.state.searchText}
+                  titleTag={this.state.searchText}
+                /> } 
               />
             </Switch>
           </div>

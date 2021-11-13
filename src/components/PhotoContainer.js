@@ -26,7 +26,10 @@ class PhotoContainer extends Component {
       photos = <NotFound />
     }
 
+    { document.title = this.props.titleTag }
+
     return (
+      
       <ul className="gif-list">
         { photos }
       </ul> 
