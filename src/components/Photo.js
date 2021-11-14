@@ -6,9 +6,7 @@ const Photo = (props) => (
         <img class="rounded" src={props.url} alt={props.title} />
         </div>
         
-    </div>
-
-    
+    </div>   
 );
 
 export default Photo;

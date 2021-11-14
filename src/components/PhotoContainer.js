@@ -4,6 +4,7 @@ import NotFound from './NotFound';
 
 class PhotoContainer extends Component { 
 
+  // Checks to see if search text matches the url query, if not then it fetches the url query photos
   componentDidUpdate() {
     if (this.props.searchText !== this.props.query) {
       this.props.getPhotos(this.props.query);
@@ -14,6 +15,7 @@ class PhotoContainer extends Component {
     const results = this.props.data;
     let photos;
 
+    // If photos are found then it displays photos, else it displays a not found message
     if (results.length > 0) {
       photos = results.map(photo => 
         <Photo 
@@ -25,7 +27,7 @@ class PhotoContainer extends Component {
     } else {
       photos = <NotFound />
     }
-
+    // Sets the page title tag
     document.title = this.props.titleTag;
 
     return (

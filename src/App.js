@@ -12,7 +12,7 @@ import SearchForm from './components/SearchForm';
 import PageNotFound from './components/PageNotFound';
 
 class App extends Component {
-
+  // States for Nav Categories, search query and loading status
   state = {
     sequoia: [],
     yosemite: [],
@@ -22,18 +22,20 @@ class App extends Component {
     loading: true
   }
 
+  // Creates an arrary of nav categories and executes getPhotos function on each nav category
   componentDidMount() {
     const navCategories = [
       "sequoia", "yosemite", "yellowstone"
     ];
-
     navCategories.map(navCategory => this.getPhotos(navCategory, true));
   }
 
+  // Function to set loading state
   isLoading = (bool) => {
     this.setState({ loading: bool })
   }
 
+  // Function to fetch flickr photos using axios
   getPhotos = (query, ofCategory = false) => {
     this.isLoading(true);
     axios
@@ -54,9 +56,7 @@ class App extends Component {
     .catch(error => {
       console.log('Error fetching and parsing data', error);
     });
-    
   };
-
 
     render() {
       return (
@@ -65,7 +65,8 @@ class App extends Component {
             <SearchForm onSearch={this.getPhotos} />
           </Nav>
           <div className="container-fluid pt-5 text-center">
-
+              {/* Displays loading message and animation when loading state is true
+              once loading state if false it loads the rest of the Switch component */}
               { (this.state.loading)
                 ? <div class="text-center">
                     <h1 className="text-white">Loading...</h1>
@@ -107,7 +108,6 @@ class App extends Component {
                     <Route render={() => <PageNotFound />} />
                   </Switch>
                 }
-            
           </div>
         </BrowserRouter>
       );
