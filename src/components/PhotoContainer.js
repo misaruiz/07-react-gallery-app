@@ -14,10 +14,8 @@ class PhotoContainer extends Component {
     const results = this.props.data;
     let photos;
     let headline;
-    let isLoading = this.props.state.loading;
 
-    if (results.length > 0 || !isLoading) {
-      headline = 'Results';
+    if (results.length > 0) {
       photos = results.map(photo => 
         <Photo 
             url={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_c.jpg`} 
@@ -25,9 +23,6 @@ class PhotoContainer extends Component {
             title={photo.title}
         />
       );
-    } else if (isLoading) {
-        headline = 'Loading...';
-
     } else {
       photos = <NotFound />
     }
@@ -36,7 +31,7 @@ class PhotoContainer extends Component {
 
     return (
       <div className="photo-container">
-        <h2>{ headline }</h2>
+          <h2>Results</h2>
           <ul>
             { photos }
           </ul> 
