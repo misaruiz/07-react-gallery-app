@@ -7,8 +7,8 @@ class Nav extends Component {
     render() {
         return (
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <div class="container">
-                <a class="navbar-brand" href="/">React Gallery App</a>
+                <div class="container-fluid">
+                <a class="navbar-brand" href="/"><i class="bi bi-camera-fill"></i> React Gallery App</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

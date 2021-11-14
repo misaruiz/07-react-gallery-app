@@ -64,7 +64,7 @@ class App extends Component {
           <Nav>
             <SearchForm onSearch={this.getPhotos} />
           </Nav>
-          <div className="container pt-5 text-center">
+          <div className="container-fluid pt-5 text-center">
 
               { (this.state.loading)
                 ? <div class="text-center">

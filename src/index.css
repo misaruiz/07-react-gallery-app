@@ -89,7 +89,24 @@ a {
   transition: transform 1.25s;
 }
 
+
+
 .photo-container li:hover img {
+  transform: scale(1.65);
+}
+
+.photo-container .ratio {
+  overflow: hidden;
+}
+
+.photo-container .ratio img {
+  transform: scale(1.25);
+  transition: transform 1.25s;
+}
+
+
+
+.photo-container .ratio:hover img {
   transform: scale(1.65);
 }
 
