@@ -13,7 +13,6 @@ class PhotoContainer extends Component {
   render() {
     const results = this.props.data;
     let photos;
-    let headline;
 
     if (results.length > 0) {
       photos = results.map(photo => 
@@ -31,8 +30,8 @@ class PhotoContainer extends Component {
 
     return (
       <div className="photo-container">
-          <h2>Results</h2>
-          <ul>
+          <h1 className="text-white">Results for {this.props.titleTag}</h1>
+          <ul className="pt-4 ps-0">
             { photos }
           </ul> 
       </div>

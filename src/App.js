@@ -14,9 +14,9 @@ import PageNotFound from './components/PageNotFound';
 class App extends Component {
 
   state = {
-    sunset: [],
-    eclipse: [],
-    shadow: [],
+    sequoia: [],
+    yosemite: [],
+    yellowstone: [],
     query: [],
     searchText: [],
     loading: true
@@ -24,7 +24,7 @@ class App extends Component {
 
   componentDidMount() {
     const navCategories = [
-      "sunset", "eclipse", "shadow"
+      "sequoia", "yosemite", "yellowstone"
     ];
 
     navCategories.map(navCategory => this.getPhotos(navCategory, true));
@@ -61,34 +61,38 @@ class App extends Component {
     render() {
       return (
         <BrowserRouter>
-          <div className="container">
-            <div className="top-nav">
-              <Nav />
-              <SearchForm onSearch={this.getPhotos} />
-            </div>
-            
+          <Nav>
+            <SearchForm onSearch={this.getPhotos} />
+          </Nav>
+          <div className="container pt-5 text-center">
+
               { (this.state.loading)
-                ? <h2>Loading...</h2>
+                ? <div class="text-center">
+                    <h1 className="text-white">Loading...</h1>
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
                 : <Switch>
                     <Route exact path="/" render={() => 
-                      <Redirect to="/sunsets" />
+                      <Redirect to="/sequoia" />
                     } />
-                    <Route exact path="/sunsets" render={() => 
+                    <Route exact path="/sequoia" render={() => 
                       <PhotoContainer 
-                        data={this.state.sunset} 
-                        titleTag="Sunsets"
+                        data={this.state.sequoia} 
+                        titleTag="sequoia"
                       /> 
                     }/>
-                    <Route exact path="/eclipses" render={() => 
+                    <Route exact path="/yosemite" render={() => 
                       <PhotoContainer 
-                        data={this.state.eclipse} 
-                        titleTag="Eclipses" 
+                        data={this.state.yosemite} 
+                        titleTag="Yosemite" 
                       /> 
                     }/>
-                    <Route exact path="/shadows" render={() => 
+                    <Route exact path="/yellowstone" render={() => 
                       <PhotoContainer 
-                        data={this.state.shadow} 
-                        titleTag="Shadows" 
+                        data={this.state.yellowstone} 
+                        titleTag="yellowstone" 
                       /> 
                     }/>
                     <Route exact path="/search/:query" render={({ match }) => 
